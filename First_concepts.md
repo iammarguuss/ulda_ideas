@@ -131,7 +131,11 @@ To increase resistance to forgery and replay attacks, ULDA allows for requiring 
 
 In 0am, this is built using the `generateLinkedHashes` function (simplified, without CRC details):
 
-$\begin{aligned} \text{Let } &L_i^{(0)} = \text{seed}_i,\\ &L_i^{(k)} = H\bigl(L_i^{(k-1)}\bigr),\;k=1\dots d_i,\\ &x_i = L_i^{(d_i)},\quad d_i = i - \text{start}. \end{aligned}​$
+$Let  ​Li(0)​=seedi​,Li(k)​=H(Li(k−1)​),$
+
+$k=1…di​,xi​=Li(di​)​,$
+
+$di​=i−start.$
 
 - The algorithm iterates through all indices i from `start` to `end`;
     
@@ -151,7 +155,7 @@ the top row contains single-layer signatures, while the bottom holds the deepest
 
 ULDA allows “jumps” over one or more steps if the client provides enhanced proof. Let’s consider two representative cases:
 
-| Scenario                          | Step Formula n+Δn{+}\Deltan+Δ              | Is Skipping Allowed? | Reason                                                                                                                                                                                                                                   |
+| Scenario                          | Step Formula $n{+}\Delta$              | Is Skipping Allowed? | Reason                                                                                                                                                                                                                                   |
 | --------------------------------- | ------------------------------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Pure Vertical Dependency**      | $\boxed{x_{44}=H\bigl(x_{43}\bigr)}$​      | **Yes**              | To verify $x_{44}$​, it is sufficient to present $x_{43}$​. If a signature was lost, the client can send $x_{44}​ + x_{43}$​ and skip over the missing $x_{42}$.                                                                         |
 | **Mixed (Horizontal + Vertical)** | $\boxed{x_{44}=H\bigl(x_{43}x_{33}\bigr)}$ | **No**               | Verification requires **two** components — $x_{43}$​ _and_ $x_{33}$​. Skipping steps would require computing $H^{-1}$, which is cryptographically infeasible. As a result, skip-proof is disabled, but overall security is strengthened. |
@@ -373,3 +377,5 @@ Therefore, while promising, ULDA remains best suited for **specific contexts**, 
 - cryptographic peer-to-peer protocols;
     
 - apps aiming for full client independence from server infrastructure.
+
+
